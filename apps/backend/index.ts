@@ -17,11 +17,14 @@ app.post("/api/query", async (req: express.Request, res: express.Response) => {
   try {
     const chain = await getChain();
     const question = req.body.query;
+    const prompt = "Please only return the GraphQL query.";
     const gptRes = await chain.call({
-      question,
+      question: question + " " + prompt,
       chat_history: [],
     });
     const graphQLQuery = gptRes.text.replace("\n", "");
+    if (graphQLQuery.includes("I don't know."))
+      return res.status(400).json({ e: "Try another query." });
     console.log(graphQLQuery);
     const airstackRes = (await request(
       AIRSTACK_GRAPHQL_URL,

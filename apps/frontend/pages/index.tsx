@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { IoPaperPlaneOutline } from "react-icons/io5";
+import { FaSpinner } from "react-icons/fa";
+import axios from "axios";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +31,7 @@ function DisplaySampleQueries({ queries }: DisplaySampleQueriesProps) {
   return (
     <div className="mt-16">
       {queries.map((query) => (
-        <div className="w-full">
+        <div className="w-full" key={query}>
           <button
             className="w-full mx-auto text-center text-gray-400 hover:underline hover:underline-offset-2"
             onClick={(e) => {
@@ -45,8 +47,25 @@ function DisplaySampleQueries({ queries }: DisplaySampleQueriesProps) {
 }
 
 function HomePage() {
-  const [userQuery, setUserQuery] = useState<String>("");
-  const [queryOutput, setQueryInput] = useState<String>("");
+  const [userQuery, setUserQuery] = useState<string>("");
+  const [queryOutput, setQueryOutput] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      const res = await axios.post("http://localhost:3001/api/query", {
+        query: userQuery,
+      });
+      setQueryOutput(res.data);
+    } catch (e: any) {
+      if (e.code === "ERR_BAD_REQUEST")
+        window.alert("Please try a different query.");
+      else window.alert("Error: An unexpected error occurred");
+    }
+    setIsLoading(false);
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8 lg:flex-col">
@@ -55,7 +74,7 @@ function HomePage() {
           <p className="text-4xl text-center">ChatGPT for blockchain.</p>
         </div>
       </div>
-      <form className="w-full max-w-sm mx-auto">
+      <form className="w-full max-w-5xl mx-auto" onSubmit={onSubmit}>
         <div className="flex items-center py-2 border-solid border-2 border-sky-500 rounded-lg">
           <input
             className="h-14 appearance-none bg-transparent w-full text-white mr-3 py-1 pl-4 pr-2 leading-tight focus:outline-none"
@@ -64,19 +83,24 @@ function HomePage() {
             aria-label="Search query"
             onChange={(e) => setUserQuery(e.target.value)}
           />
-          <IoPaperPlaneOutline
-            className="h-10 w-10 pr-4"
-            onClick={(e) => {
-              console.log(userQuery);
-            }}
-          />
+          <button type="submit">
+            {isLoading ? (
+              <FaSpinner className="h-10 w-10 pr-4" />
+            ) : (
+              <IoPaperPlaneOutline className="h-10 w-10 pr-4" />
+            )}
+          </button>
         </div>
       </form>
-      {queryOutput === "" ? (
-        <DisplaySampleQueries queries={sampleQueries} />
-      ) : (
-        <></>
-      )}
+      <div className="flex flex-col items-center pt-12">
+        {queryOutput === "" ? (
+          <DisplaySampleQueries queries={sampleQueries} />
+        ) : (
+          <div className="bg-sky-900 w-full h-64 rounded p-8 overflow-scroll">
+            {JSON.stringify(queryOutput)}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
