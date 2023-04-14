@@ -1,0 +1,25 @@
+Here is an example prompt to generate a graphQL query: 
+Give me recent transfers of DAI token
+
+query RecentDaiTransfers {
+  TokenTransfers(
+    input: {
+      filter: {tokenAddress: {_eq: "0x6b175474e89094c44da98b954eedeac495271d0f"}},
+      blockchain: ethereum,
+      limit: 10,
+      order: {blockTimestamp: DESC}
+    }
+  ) {
+    TokenTransfer {
+      amount
+      blockNumber
+      blockTimestamp
+      from {
+        addresses
+      }
+      to {
+        addresses
+      }
+    }
+  }
+}

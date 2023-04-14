@@ -1,0 +1,27 @@
+Here is an example prompt to generate a graphQL query: 
+Show me all Milady token holders, their ENS names, and the token images
+
+query MiladyHoldersENSAndImages {
+  TokenBalances(
+    input: {filter: {tokenAddress: {_eq: "0x5Af0D9827E0c53E4799BB226655A1de152A425a5"}, tokenType: {_in: [ERC1155, ERC721]}}, blockchain: ethereum, limit: 50}
+  ) {
+    TokenBalance {
+      owner {
+        addresses
+        primaryDomain {
+          name
+        }
+        domains {
+          name
+        }
+      }
+      tokenNfts {
+        contentValue {
+          image {
+            original
+          }
+        }
+      }
+    }
+  }
+}

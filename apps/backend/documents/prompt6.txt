@@ -1,0 +1,51 @@
+Here is an example prompt to generate a graphQL query: 
+Get all metadata about the BAYC NFT collection including a summary of the traits distribution
+
+query GetNFTMetadata {
+  Tokens(input: {filter: {address: {_eq: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"}}, blockchain: ethereum}) {
+    Token {
+      address
+      baseURI
+      chainId
+      contractMetaDataURI
+      decimals
+      id
+      lastTransferBlock
+      lastTransferHash
+      lastTransferTimestamp
+      name
+      rawContractMetaData
+      symbol
+      tokenBalances {
+        owner {
+          addresses
+        }
+        amount
+      }
+      tokenNfts {
+        id
+        tokenId
+        tokenURI
+        metaData {
+          name
+        }
+        contentValue {
+          image {
+            large
+            medium
+            original
+            small
+            extraSmall
+          }
+        }
+      }
+      tokenTraits
+      totalSupply
+      type
+    }
+    pageInfo {
+      nextCursor
+      prevCursor
+    }
+  }
+}

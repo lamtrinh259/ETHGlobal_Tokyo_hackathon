@@ -1,0 +1,24 @@
+Here is an example prompt to generate a graphQL query: 
+Get all tokens held by wallet address 0x540cb04ebab67e05a620b97bb367ac5e4ed68f09
+
+query GetTokensByWalletAddress {
+  TokenBalances(input: {filter: { owner: {_eq: "0x540cb04ebab67e05a620b97bb367ac5e4ed68f09"}}, limit: 10, blockchain: ethereum}) {
+    TokenBalance {
+      amount
+      chainId
+      id
+      lastUpdatedBlock
+      lastUpdatedTimestamp
+      owner {
+        addresses
+      }
+      tokenAddress
+      tokenId
+      tokenType
+      token {
+        name
+        symbol
+      }
+    }
+  }
+}

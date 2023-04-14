@@ -1,10 +1,14 @@
 The TokenNFTs API provides detailed data about a specific NFT token within an NFT Collection, either an ERC721 or ERC1155 contract. You can use this API to return token-specific metadata, including traits, and resized images.
 
+These are the available filters for the TokenNFTs API:
+
 input TokenNftFilter {
   address: # Contract address (ERC721, ERC1155)
   metaData: # allows querying by NFT Token Name, or specific trait or attribute.
   tokenId: # Unique NFT token ID
 }
+
+This is the schema for the Wallet API:
 
 type TokenNft {
   address: Address! # NFT contract address on the blockchain
