@@ -2,6 +2,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 import express from "express";
+import cors from "cors";
 import { request } from "graphql-request";
 import getChain from "./lib/chain";
 
@@ -10,6 +11,7 @@ const AIRSTACK_GRAPHQL_URL = "https://api.airstack.xyz/gql";
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.post("/api/query", async (req: express.Request, res: express.Response) => {
   try {
