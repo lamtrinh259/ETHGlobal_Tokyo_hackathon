@@ -1,0 +1,23 @@
+Here is an example prompt to generate a graphQL query: 
+Get all tokens held by vitalik.eth on Ethereum
+
+query getAllTokensBy {
+  TokenBalances(input: {filter: { owner: {_eq: "vitalik.eth"}}, limit: 10, blockchain: ethereum}) {
+    TokenBalance {
+      amount
+      chainId
+      id
+      lastUpdatedBlock
+      lastUpdatedTimestamp
+      owner {
+        addresses
+      }
+      tokenAddress
+      tokenId
+      token {
+        name
+        symbol
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+Here is an example prompt to generate a graphQL query: 
+For this list of ENS addresses, show me all NFTs they own, including images: dwr.eth, vitalik.eth, balajis.eth
+
+query MyQuery {
+  TokenBalances(
+    input: {filter: {owner: {_in: ["dwr.eth", "vitalik.eth", "balajis.eth"]}, tokenType: {_in: [ERC1155, ERC721]}}, blockchain: ethereum, limit: 10}
+  ) {
+    TokenBalance {
+      tokenAddress
+      amount
+      owner {
+        addresses
+        primaryDomain {
+          id
+        }
+        domains {
+          id
+        }
+      }
+      tokenNfts {
+        contentValue {
+          image {
+            extraSmall
+            small
+            medium
+            large
+            original
+          }
+        }
+      }
+    }
+  }
+}

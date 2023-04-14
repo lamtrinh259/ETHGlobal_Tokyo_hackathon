@@ -1,0 +1,11 @@
+Here is an example prompt to generate a graphQL query: 
+Get all Farcaster usernames and Eth associated addresses
+
+query GetAllFarcasterUsernamesAndEthAddresses {
+  Socials(input: {filter: {dappName: {_eq: farcaster}}, blockchain: ethereum, limit: 10}) {
+    Social {
+      profileName
+      userAssociatedAddresses
+    }
+  }
+}
