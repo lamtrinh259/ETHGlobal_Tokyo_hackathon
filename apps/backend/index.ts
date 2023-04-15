@@ -4,36 +4,55 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import { request } from "graphql-request";
-import getChain from "./lib/chain";
+import { getAgent } from "./lib";
 
 const PORT = 3001;
-const AIRSTACK_GRAPHQL_URL = "https://api.airstack.xyz/gql";
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.post("/api/query", async (req: express.Request, res: express.Response) => {
-  try {
-    const chain = await getChain();
-    const question = req.body.query;
-    const prompt = "Please only return the GraphQL query.";
-    const gptRes = await chain.call({
-      question: question + " " + prompt,
-      chat_history: [],
-    });
-    const graphQLQuery = gptRes.text.replace("\n", "");
-    if (graphQLQuery.includes("I don't know."))
-      return res.status(400).json({ e: "Try another query." });
-    console.log(graphQLQuery);
-    const airstackRes = (await request(
-      AIRSTACK_GRAPHQL_URL,
+const GRAPHQL_URL: { [key: string]: string } = {
+  "Lens Protocol GraphQL": "https://api.lens.dev",
+  "Airstack GraphQL": "https://api.airstack.xyz/gql",
+};
+
+async function gqlRequest(tool: string, graphQLQuery: string): Promise<any> {
+  console.log(tool);
+  if (tool == "Lens Protocol GraphQL") {
+    console.log({ tool });
+    return request(GRAPHQL_URL[tool], graphQLQuery, {});
+  }
+  if (tool == "Airstack GraphQL") {
+    console.log({ tool });
+    return request(
+      GRAPHQL_URL[tool],
       graphQLQuery,
       {},
       { authorization: process.env.AIRSTACK_API_KEY! }
-    )) as any;
-    return res.status(200).json({ result: airstackRes });
+    );
+  }
+}
+
+app.post("/api/query", async (req: express.Request, res: express.Response) => {
+  try {
+    const agent = await getAgent();
+    const question = req.body.query;
+    const gptRes = await agent.call({
+      input: question + " Only return the GraphQL query.",
+    });
+    console.log({ gptRes, steps: gptRes.intermediateSteps });
+    const graphQLQuery = gptRes.output.replace("\n", "");
+    if (graphQLQuery.includes("I don't know."))
+      return res.status(400).json({ e: "Try another query." });
+    console.log(graphQLQuery);
+    const graphqlRes = await gqlRequest(
+      gptRes.intermediateSteps[0].action.tool,
+      graphQLQuery
+    );
+    return res.status(200).json({ result: graphqlRes });
   } catch (e: any) {
+    console.log(e);
     return res.status(500).json({ e: e.message });
   }
 });
