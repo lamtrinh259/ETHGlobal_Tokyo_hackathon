@@ -2,9 +2,10 @@
 # Octoplorer: block query made easy
 ## AI-powered blockchain explorer with human-readable answers
 ***
+We are a team of 5 members and we built this project from scratch in the span of 36 hours during the hackathon.
 ### Project submission materials
 1. Presentation deck can be viewed here: https://docs.google.com/presentation/d/1PbiUOzlKVB7FomlmyNA5c82ZmYIczTUyBVE5gr6LoYc/edit#slide=id.g22dfca0265a_0_45
-2. Figma draft can be viewed here:
+2. Early Figma draft can be viewed here: https://www.figma.com/proto/ivoq9IGR6IYoOA67uMrJNn/Untitled-Tokyo-Hackathon-Project?page-id=0%3A1&node-id=47-44&viewport=440%2C181%2C0.17&scaling=scale-down&starting-point-node-id=47%3A44
 3. Demo video can be viewed here:
 
 ### Project description
@@ -30,9 +31,11 @@ ___
 ### How to run the project locally
 1. Get the API keys required to run the project locally: OpenAI API key, and Airstack API key. You can get them by signing up for free at https://openai.com/, and https://airstack.xyz/
 2. Install all requirements first by running
-`yarn install`
+`yarn install` from the project root folder
 3. For back end:
-a. Ingest the pre-trained data (text documents) by running: `yarn ingest`
-b. Then run `yarn start` to start the server at http://localhost:3001
+a. Go inside the apps/backend folder
+b. Ingest the pre-trained data (text documents) by running: `yarn ingest`
+c. Then run `yarn start` to start the server at http://localhost:3001
 4. For front end:
-Run `yarn start` to start the server at http://localhost:3000
+a. On another terminal, go inside the apps/frontend folder
+b. Run `yarn start` to start the server at http://localhost:3000
