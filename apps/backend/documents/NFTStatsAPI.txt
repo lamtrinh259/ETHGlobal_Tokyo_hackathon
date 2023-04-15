@@ -1,0 +1,54 @@
+The NFTStats API provides aggregated data for a specific NFT token within a collection (both ERC721 and ERC1155).
+Timeframe filter details (all times are in UTC) for when the sale transactions are captured for the aggregation:
+Daily - starts from 00:00 am to 11:59 pm every day
+Weekly - starts from 00:00 am on Monday to 11:59 pm on the same week Sunday
+Monthly - 00:00 am on the first calendar day of the month to 11:59 pm on the last calendar day of the month. If querying the current month, the aggregation would be from the first calendar day to the most recent daily aggregation.
+Yearly - 00:00 am on the first day of the year to 11:59 pm on the last day of the year. If querying the current year, the aggregation would be from the first calendar day to the most recent daily aggregation.
+Lifetime - from the first recorded sale of the NFT to the most recent daily aggregation.
+
+Inputs and Filters
+input NFTStatFilter {
+averageSalePriceInUSDC:
+dappName: # Marketplace DApp name
+dappSlug: # Marketplace DApp slug (contract version)
+firstTransactionBlockTimestamp:
+highestSalePriceInUSDC:
+lastTransactionBlockTimestamp:
+lowestSalePriceInUSDC:
+tokenAddress: # NFT contract address on the blockchain
+tokenId: # Unique NFT token ID
+totalSalesCount:
+totalSaleVolumeInUSDC:
+timeframe: DAILY / WEEKLY / MONTHLY / YEARLY / LIFETIME
+}
+
+Outputs
+type CollectionStat {
+averageSalePriceInNativeToken: Float
+averageSalePriceInUSDC: Float
+blockchain: Blockchain # Blockchain where the NFT sale transaction took place
+chainId: String # Unique blockchain identifier
+dappName: # Marketplace DApp name
+dappSlug: # Marketplace DApp slug (contract version)
+dappVersion: String # Airstack unique dappVersion number
+firstTransactionBlockTimestamp: Time
+highestSalePriceInNativeToken: Float
+highestSalePriceInUSDC: Float
+highestSaleTransactionId: String
+id: ID! # Airstack unique identifier for this particular element
+lastTransactionBlockTimestamp: Time
+lowestSalePriceInNativeToken: Float
+lowestSalePriceInUSDC: Float
+lowestSaleTransactionId: String
+timeFrame: TimeFrames # DAILY / WEEKLY / MONTHLY / YEARLY / LIFETIME
+tokenAddress: Address! # NFT contract address on the blockchain
+tokenNft: # **Nested query** allowing to get NFT token data (images, traits, etc.)
+tokenId: # Unique NFT token ID
+totalFeeVolumeInNativeToken: Float
+totalFeeVolumeInUSDC: Float
+totalRoyaltyFeeVolumeInNativeToken: Float
+totalRoyaltyFeeVolumeInUSDC: Float
+totalSalesCount: Int
+totalSaleVolumeInNativeToken: Float
+totalSaleVolumeInUSDC: Float
+}

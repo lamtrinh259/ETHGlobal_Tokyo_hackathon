@@ -1,0 +1,30 @@
+Airstack Identity API has been integrated throughout all of the GraphQL queries! You can filter your queries using the identity inputs by passing the following values instead of a blockchain address:
+ENS input - uses resolved address to get the data.
+You can enter ENS address directly in the “address” field, for example:
+vitalik.eth
+ens:vitalik.eth - “ens:” prefix is optional
+Farcaster input.
+You can enter Farcaster inputs in the “address” field as follows:
+fc_fid:5650 - use “fc_fid:” prefix followed by the Farcaster user ID
+fc_fname:vbuterin - use “fc_fname:” prefix followed by the Farcaster user ID
+Alternatively, you can enter the Farcaster profile name directly in the Socials profileName field.
+
+Example: ID1 Show me all NFTs and their images currently being held by Farcaster user: dwr
+query ID1 {
+  TokenBalances(input: {filter: {owner: {_eq: "fc_fname:dwr"}, tokenType: {_in: [ERC721, ERC1155]}}, blockchain: ethereum}) {
+    TokenBalance {
+      tokenNfts {
+        address
+        tokenId
+        contentValue {
+          image {
+            medium
+          }
+        }
+        token {
+          name
+        }
+      }
+    }
+  }
+}
