@@ -41,8 +41,9 @@ app.post("/api/query", async (req: express.Request, res: express.Response) => {
   try {
     const question = req.body.query;
     const gptRes = await agent.call({
-      input: question + " Only return the GraphQL query.",
+      input: "Only return the GraphQL query to my following question, do not include additional text: " + question,
     });
+    console.log('Human query is', question)
     console.log({ gptRes, steps: gptRes.intermediateSteps });
     const graphQLQuery = gptRes.output.replace("\n", "");
     if (graphQLQuery.includes("I don't know."))
@@ -52,6 +53,7 @@ app.post("/api/query", async (req: express.Request, res: express.Response) => {
       gptRes.intermediateSteps[0].action.tool,
       graphQLQuery
     );
+    console.log('Result is', graphqlRes)
     return res.status(200).json({ result: graphqlRes });
   } catch (e: any) {
     console.log(e);

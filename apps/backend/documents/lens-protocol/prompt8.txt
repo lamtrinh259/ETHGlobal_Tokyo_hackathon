@@ -1,0 +1,7 @@
+Get the total of burned Profiles of lens protocol
+
+query GlobalProtocolStats {
+  globalProtocolStats(request: null) {
+    totalBurntProfiles
+  }
+}
