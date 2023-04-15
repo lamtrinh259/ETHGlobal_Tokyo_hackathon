@@ -262,7 +262,7 @@ function HomePage() {
               )}
             </button>
           </div>
-          {queryOutput !== "" && (
+          {queryOutput !== "" && !isDisconnected && (
             <Modal
               address={address!}
               message={queryOutput}
