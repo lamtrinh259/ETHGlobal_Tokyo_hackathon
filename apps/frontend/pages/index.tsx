@@ -17,11 +17,11 @@ import html2canvas from "html2canvas";
 const inter = Inter({ subsets: ["latin"] });
 
 const sampleQueries: string[] = [
-  "Show all ENS domains by vitalik.eth",
+  "Show all ENS domains by vitalik.eth.",
   "What are the largest Ethereum transactions in the past week?",
-  "Smart contracts with the highest volume in the last month",
-  "Top-performing ERC-20 tokens for trading volume",
-  "What are the most popular NFT collections on Ethereum",
+  "Show me the NFT pictures on Ethereum held by paradigm.eth.",
+  "Get the monthly stats for The Currency NFT collection. The collection address is 0xaaDc2D4261199ce24A4B0a57370c4FCf43BB60aa.",
+  "Find the top 10 Lens Profiles and return their id, name, handle, and the number of totalFollowers, sorted by the number of most followers.",
 ];
 
 export default function Home() {
@@ -231,13 +231,17 @@ function HomePage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-gray-50 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-700 to-slate-950 sm:py-12">
-      <header className="flex justify-end pr-14">
+      <header className="flex justify-between pr-14">
+        <img src="./project_icon.png" className="ml-14 h-16 w-16 rounded-lg" />
         <ConnectButton />
       </header>
       <main>
         <div className="mx-auto p-12 pt-48">
-          <p className="text-center text-6xl font-bold text-white">
-            ChatGPT for blockchain.
+          <p className="text-center text-8xl font-bold text-white">
+            Octoplorer
+          </p>
+          <p className="mt-4 text-center text-4xl font-bold text-white">
+            Block query made easy.
           </p>
         </div>
         <form className="mx-auto w-full max-w-5xl" onSubmit={onSubmit}>
