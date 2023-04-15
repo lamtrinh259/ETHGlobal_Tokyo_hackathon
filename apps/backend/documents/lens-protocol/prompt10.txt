@@ -1,0 +1,9 @@
+Check if transaction 0x64464dc0de5aac614a82dfd946fc0e17105ff6ed177b7d677ddb88ec772c52d3 has been indexed
+query HasTxHashBeenIndexed {
+  hasTxHashBeenIndexed(request: { txHash: "0x64464dc0de5aac614a82dfd946fc0e17105ff6ed177b7d677ddb88ec772c52d3" }) {
+    ... on TransactionIndexedResult {
+      indexed
+     
+    }
+  }
+}

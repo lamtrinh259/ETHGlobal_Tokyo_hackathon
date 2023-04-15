@@ -1,0 +1,17 @@
+Return the profile stats for profile id 0x09
+
+query ProfileStats {
+  profiles(request: { profileIds: ["0x09"]}) {
+    items {
+      stats {
+        totalFollowers
+        totalFollowing
+        totalPosts
+        totalComments
+        totalMirrors
+        totalPublications
+        totalCollects
+      }
+    }
+  }
+}

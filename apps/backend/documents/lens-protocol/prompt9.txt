@@ -1,0 +1,7 @@
+Get the total Profiles of lens protocol
+
+query GlobalProtocolStats {
+  globalProtocolStats(request: null) {
+    totalProfiles 
+  }
+}

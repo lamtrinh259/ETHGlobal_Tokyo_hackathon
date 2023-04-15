@@ -1,0 +1,8 @@
+Return the bio and owner of 420tiesto.lens
+
+query Profile {
+  profile(request: { handle: "420tiesto.lens" }) {
+    bio
+    ownedBy
+  }
+}

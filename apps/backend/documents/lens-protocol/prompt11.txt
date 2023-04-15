@@ -1,0 +1,5 @@
+Check if API is still alive
+
+query Query {
+  ping
+}
