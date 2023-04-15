@@ -46,14 +46,14 @@ export default function ExploreProfiles({ items }: { items: IItems[] }) {
     <div className="flex flex-col items-start justify-start gap-4">
       <div className="flex flex-row">
         <button
-          className="rounded px-4 py-2 disabled:bg-slate-950"
+          className="rounded px-4 py-2 text-white disabled:bg-slate-950"
           disabled={view === "table"}
           onClick={() => setView("table")}
         >
           Table
         </button>
         <button
-          className="rounded px-4 py-2 disabled:bg-slate-950"
+          className="rounded px-4 py-2 text-white disabled:bg-slate-950"
           disabled={view === "chart"}
           onClick={() => setView("chart")}
         >
