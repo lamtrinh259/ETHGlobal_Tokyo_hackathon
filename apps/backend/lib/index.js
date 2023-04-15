@@ -62,13 +62,19 @@ function getAirstackTool() {
     return __awaiter(this, void 0, void 0, function* () {
         const model = new openai_1.OpenAI({
             openAIApiKey: process.env.OPENAI_API_KEY,
-            temperature: 0.1,
+            temperature: 0,
         });
         const vectorStore = yield hnswlib_1.HNSWLib.load(path_1.default.join(__dirname, `../vector-store/airstack`), new openai_2.OpenAIEmbeddings());
         const chain = chains_1.VectorDBQAChain.fromLLM(model, vectorStore);
         const airstackTool = new tools_1.ChainTool({
             name: "Airstack GraphQL",
-            description: "This is a tool for generating GraphQL queries for Airstack. Userful for generating queries for getting tokens, token balances, and NFTs for a provided address. Please use the user query directly as input.",
+            description: `You are the expert at Airstack API and how to parse human query into GraphQL language that is conformant to Airstack API schema.
+      Your main objective is to generate GraphQL code based on the query of the user. Your output has to be GraphQL because it will be used as input to
+      Airstack API endpoint. I have pre-fed into your memory the documents containing the GraphQL schema of Airstack API along with many examples.
+      For those examples, if the user asks a question that is almost similar (by any measure of similarity distance) or same as the examples, you can simply copy
+      the GraphQL code from the examples and return that as the output. If the user asks a question that is not similar to any of the examples, that is where you
+      can use your creativity, but please try to stick to the schema as much as possible.
+      `,
             chain,
         });
         return airstackTool;
@@ -79,13 +85,21 @@ function getLensProtocolTool() {
     return __awaiter(this, void 0, void 0, function* () {
         const model = new openai_1.OpenAI({
             openAIApiKey: process.env.OPENAI_API_KEY,
-            temperature: 0.25,
+            temperature: 0,
         });
         const vectorStore = yield hnswlib_1.HNSWLib.load(path_1.default.join(__dirname, `../vector-store/lens-protocol`), new openai_2.OpenAIEmbeddings());
         const chain = chains_1.VectorDBQAChain.fromLLM(model, vectorStore);
         const lensProtocolTool = new tools_1.ChainTool({
             name: "Lens Protocol GraphQL",
-            description: "This is a tool for generating GraphQL queries for Lens Protocol. Useful for generating queries for getting profiles, publications of provided lens handles. Please use the user query directly as input",
+            description: `You are the expert at Lens Protocol API and how to parse human query into GraphQL language that is conformant to Lens Protocol API schema.
+      Your main objective is to generate GraphQL code based on the query of the user. Your output has to be GraphQL because it will be used as input to
+      Lens Protocol API endpoint. I have pre-fed into your memory the documents containing the examples for certain queries in this format:
+      - user query
+      - GraphQL output
+      For those examples, if the user asks a question that is almost similar (by any measure of similarity distance) or same as the examples, you can simply copy
+      the GraphQL code from the examples and return that as the output. If the user asks a question that is not similar to any of the examples, please use your
+      creativity to generate GraphQL code that is based off of the closet example in terms of similary distance measure.
+      `,
             chain,
         });
         return lensProtocolTool;

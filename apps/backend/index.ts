@@ -54,6 +54,8 @@ app.post("/api/query", async (req: express.Request, res: express.Response) => {
       graphQLQuery
     );
     console.log('Result is', graphqlRes)
+    // console.log('Type of result is', typeof(graphqlRes);
+    console.log('Typename is', graphqlRes.typename)
     return res.status(200).json({ result: graphqlRes });
   } catch (e: any) {
     console.log(e);

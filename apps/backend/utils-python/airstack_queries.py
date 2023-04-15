@@ -49,8 +49,8 @@ def fetch_all_transactions(query):
 
         # For query 2
         # print(result)
-        # print(type(result['data']['CollectionStats']['CollectionStat'])) # a list
-        # list_data_2 = result['data']['CollectionStats']['CollectionStat']
+        print(type(result['data']['CollectionStats']['CollectionStat'])) # a list
+        list_data_2 = result['data']['CollectionStats']['CollectionStat']
         # for item in list_data_2:
         #     print(item.keys())
         #     print(item.values())

@@ -2,7 +2,7 @@ Here is an example prompt to generate a graphQL query:
 Get me the Lens profile for stani
 
 query Profile {
-  profile(request: { handle: "stani" }) {
+  profile(request: { handle: "stani.lens" }) {
     id
     name
     bio
