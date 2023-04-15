@@ -6,6 +6,13 @@ import { FaSpinner } from "react-icons/fa";
 import axios from "axios";
 import parseAndRender from "~/utils/parser";
 import { query1response, query2response } from "~/utils/sampleJSONOutputs";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useAccount, useSigner } from "wagmi";
+import * as PushAPI from "@pushprotocol/restapi";
+import { ENV } from "@pushprotocol/restapi/src/lib/constants";
+import { userView } from "~/utils/atoms";
+import { useAtom } from "jotai";
+import html2canvas from "html2canvas";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -50,10 +57,161 @@ function DisplaySampleQueries({
   );
 }
 
+async function sendPushMessage(
+  account: string,
+  targetAddress: string,
+  message: string,
+  signer: any,
+  isImage: boolean
+) {
+  const user = await PushAPI.user.get({
+    account: `eip155:${account}`,
+    env: ENV.PROD,
+  });
+
+  if (user === null)
+    await PushAPI.user.create({ signer: signer, env: ENV.PROD });
+
+  const pgpPrivKey = await PushAPI.chat.decryptPGPKey({
+    encryptedPGPPrivateKey: user.encryptedPrivateKey,
+    signer: signer,
+  });
+
+  if (isImage) {
+  } else if (typeof message === "object") {
+    message = JSON.stringify(message);
+  }
+  const fileMessageContent = {
+    content: "",
+    name: "testimage",
+  };
+  const element = document.getElementById("chart");
+  const canvas = await html2canvas(element!);
+  const link = document.createElement("a");
+  const dataURL = canvas.toDataURL("image/jpg", 1.0);
+
+  /* to download */
+  // link.href = dataURL;
+  // link.download = "test-downloaded-image.jpg";
+  // document.body.appendChild(link);
+  // link.click();
+  // document.body.removeChild(link);
+  fileMessageContent.content = dataURL;
+
+  await PushAPI.chat.send({
+    messageContent: isImage ? JSON.stringify(fileMessageContent) : message,
+    messageType: isImage ? "Image" : "Text",
+    receiverAddress: "eip155:" + targetAddress,
+    signer: signer,
+    pgpPrivateKey: pgpPrivKey,
+    env: ENV.PROD,
+  });
+}
+
+function Modal({
+  address,
+  message,
+  signer,
+  view,
+}: {
+  address: string;
+  message: string;
+  signer: any;
+  view: string;
+}) {
+  const [showModal, setShowModal] = useState(false);
+  const [targetAddress, setTargetAddress] = useState("");
+  return (
+    <div className="mt-5 flex justify-end">
+      <button
+        className="mb-1 mr-1 rounded border-2 border-gray-400 bg-slate-800/95 px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-pink-600"
+        type="button"
+        onClick={() => setShowModal(true)}
+      >
+        Send via Push
+      </button>
+      {showModal ? (
+        <>
+          <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none">
+            <div className="relative mx-auto my-6 w-4/12 max-w-3xl">
+              {/*content*/}
+              <div className="relative flex w-full flex-col rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none">
+                {/*header*/}
+                <div className="flex items-start justify-between rounded-t border-b border-solid border-slate-200 p-5">
+                  <h3 className="text-3xl font-semibold text-black">
+                    Send query result
+                  </h3>
+                  <button
+                    className="float-right ml-auto border-0 bg-transparent p-1 text-3xl font-semibold leading-none text-black opacity-5 outline-none focus:outline-none"
+                    onClick={() => setShowModal(false)}
+                  >
+                    <span className="block h-6 w-6 bg-transparent text-2xl text-black opacity-5 outline-none focus:outline-none">
+                      ×
+                    </span>
+                  </button>
+                </div>
+                {/*body*/}
+                <div className="relative flex-auto p-6">
+                  {/* <p className="my-4 text-lg leading-relaxed text-slate-500">
+                    I always felt like I could do anything. That’s the main
+                    thing people are controlled by! Thoughts- their perception
+                    of themselves! They're slowed down by their perception of
+                    themselves. If you're taught you can’t do anything, you
+                    won’t do anything. I was taught I could do everything.
+                  </p> */}
+                  <p className="inline-block pr-2 text-black">
+                    Target Address:{" "}
+                  </p>
+                  <input
+                    type="text"
+                    value={targetAddress}
+                    onChange={(e) => setTargetAddress(e.target.value)}
+                    className="h-16 w-full text-black"
+                  />
+                </div>
+                {/*footer*/}
+                <div className="flex items-center justify-center rounded-b border-t border-solid border-slate-200 p-6">
+                  <button
+                    className="background-transparent mb-1 mr-1 px-6 py-2 text-sm font-bold uppercase text-red-500 outline-none transition-all duration-150 ease-linear focus:outline-none"
+                    type="button"
+                    onClick={() => setShowModal(false)}
+                  >
+                    Close
+                  </button>
+                  <button
+                    className="mb-1 mr-1 rounded bg-emerald-500 px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-emerald-600"
+                    type="button"
+                    onClick={() => {
+                      sendPushMessage(
+                        address,
+                        targetAddress,
+                        message,
+                        signer,
+                        view === "chart"
+                      );
+                      setShowModal(false);
+                    }}
+                  >
+                    Send message
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="fixed inset-0 z-40 bg-black opacity-25"></div>
+        </>
+      ) : null}
+    </div>
+  );
+}
+
 function HomePage() {
   const [userQuery, setUserQuery] = useState<string>("");
   const [queryOutput, setQueryOutput] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { address, isConnecting, isDisconnected } = useAccount();
+  const { data: signer } = useSigner();
+  const [view, setView] = useAtom(userView);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -72,43 +230,56 @@ function HomePage() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col bg-gray-50 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-700 to-slate-950 sm:py-12">
-      <div className="mx-auto p-12 pt-48">
-        <p className="text-center text-6xl font-bold text-white">
-          ChatGPT for blockchain.
-        </p>
-      </div>
-      <form className="mx-auto w-full max-w-5xl" onSubmit={onSubmit}>
-        <div className="flex h-14 items-center rounded-lg border-2 border-solid border-white bg-gray-800 py-2">
-          <input
-            className="mr-3 w-full appearance-none bg-transparent py-1 pl-4 pr-2 text-xl leading-tight text-gray-300 focus:outline-none"
-            type="text"
-            placeholder="Enter your question"
-            aria-label="Search query"
-            value={userQuery}
-            onChange={(e) => setUserQuery(e.target.value)}
-          />
-          <button type="submit" className="p-4">
-            {isLoading ? (
-              <FaSpinner className="h-8 w-8 animate-spin" />
-            ) : (
-              <IoPaperPlaneOutline className="h-8 w-8 text-gray-500" />
-            )}
-          </button>
+    <div className="flex min-h-screen flex-col bg-gray-50 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-700 to-slate-950 sm:py-12">
+      <header className="flex justify-end pr-14">
+        <ConnectButton />
+      </header>
+      <main>
+        <div className="mx-auto p-12 pt-48">
+          <p className="text-center text-6xl font-bold text-white">
+            ChatGPT for blockchain.
+          </p>
         </div>
-      </form>
-      <div className="flex flex-col items-center pt-12">
-        {queryOutput === "" ? (
-          <div className="mt-auto">
-            <DisplaySampleQueries
-              queries={sampleQueries}
-              setUserQuery={setUserQuery}
+        <form className="mx-auto w-full max-w-5xl" onSubmit={onSubmit}>
+          <div className="flex h-14 items-center rounded-lg border-2 border-solid border-white bg-gray-800 py-2">
+            <input
+              className="focus:outline-none` mr-3 w-full appearance-none bg-transparent py-1 pl-4 pr-2 text-xl leading-tight text-gray-300"
+              type="text"
+              placeholder="Enter your question"
+              aria-label="Search query"
+              value={userQuery}
+              onChange={(e) => setUserQuery(e.target.value)}
             />
+            <button type="submit" className="p-4">
+              {isLoading ? (
+                <FaSpinner className="h-8 w-8 animate-spin" />
+              ) : (
+                <IoPaperPlaneOutline className="h-8 w-8 text-gray-500" />
+              )}
+            </button>
           </div>
-        ) : (
-          queryOutput !== "" && parseAndRender(queryOutput)
-        )}
-      </div>
-    </main>
+          {queryOutput !== "" && (
+            <Modal
+              address={address!}
+              message={queryOutput}
+              signer={signer}
+              view={view}
+            />
+          )}
+        </form>
+        <div className="flex flex-col items-center pt-6">
+          {queryOutput === "" ? (
+            <div className="mt-auto">
+              <DisplaySampleQueries
+                queries={sampleQueries}
+                setUserQuery={setUserQuery}
+              />
+            </div>
+          ) : (
+            parseAndRender(queryOutput)
+          )}
+        </div>
+      </main>
+    </div>
   );
 }
