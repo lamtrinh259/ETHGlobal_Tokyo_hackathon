@@ -1,0 +1,20 @@
+Here is an example prompt to generate a graphQL query: 
+Get all the token holders and their ENS names for Nouns DAO
+
+query GetTokenHolders {
+  TokenBalances(
+    input: {filter: {tokenAddress: {_eq: "0x9C8fF314C9Bc7F6e59A9d9225Fb22946427eDC03"}}, limit: 10, blockchain: ethereum}
+  ) {
+    TokenBalance {
+      owner {
+        addresses
+        primaryDomain {
+          name
+        }
+        domains {
+          name
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+Here is an example prompt to generate a graphQL query: 
+Get all the token holders and their ENS names for Tether
+
+query GetTokenBalances {
+  TokenBalances(
+    input: {blockchain: ethereum, limit: 10, filter: {tokenAddress: {_eq: "0xdac17f958d2ee523a2206206994597c13d831ec7"}}}
+  ) {
+    TokenBalance {
+      amount
+      chainId
+      owner {
+        addresses
+        domains {
+          id
+          name
+          owner
+        }
+      }
+    }
+  }
+}

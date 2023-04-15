@@ -1,0 +1,21 @@
+Here is an example prompt to generate a graphQL query: 
+For the Ethereum token Matic, show me all token holders and the NFTs they hold
+
+query GetTokenHolders {
+  TokenBalances(
+    input: {blockchain: ethereum, filter: {tokenAddress: {_eq: "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"}}, limit: 10}
+  ) {
+    TokenBalance {
+      owner {
+        identity
+        addresses
+        tokenBalances {
+          tokenNfts {
+            tokenId
+            contentType
+          }
+        }
+      }
+    }
+  }
+}

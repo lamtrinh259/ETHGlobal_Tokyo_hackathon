@@ -1,0 +1,41 @@
+Here is an example prompt to generate a graphQL query: 
+Get me the Lens profile for stani
+
+query Profile {
+  profile(request: { handle: "stani" }) {
+    id
+    name
+    bio
+    followNftAddress
+    metadata
+    isDefault
+    picture {
+      ... on NftImage {
+        contractAddress
+        tokenId
+        uri
+        verified
+      }
+      __typename
+    }
+    handle
+    coverPicture {
+      ... on NftImage {
+        contractAddress
+        tokenId
+        uri
+        verified
+      }
+      __typename
+    }
+    ownedBy
+    stats {
+      totalFollowers
+      totalFollowing
+      totalPosts
+      totalComments
+      totalMirrors
+      totalPublications
+      totalCollects
+    }
+  }
