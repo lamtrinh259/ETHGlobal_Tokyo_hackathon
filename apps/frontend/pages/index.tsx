@@ -52,7 +52,7 @@ function DisplaySampleQueries({
 
 function HomePage() {
   const [userQuery, setUserQuery] = useState<string>("");
-  const [queryOutput, setQueryOutput] = useState(query1response);
+  const [queryOutput, setQueryOutput] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
