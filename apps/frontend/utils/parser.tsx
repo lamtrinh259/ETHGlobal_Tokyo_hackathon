@@ -13,6 +13,8 @@ export default function parseAndRender(resp: any): any {
 
   return type === "data" ? (
     parseAndRender(resp["data"])
+  ) : type === "result" ? (
+    parseAndRender(resp["result"])
   ) : type === "CollectionStats" ? (
     renderCollectionStats(resp["CollectionStats"])
   ) : type === "TokenBalances" ? (
