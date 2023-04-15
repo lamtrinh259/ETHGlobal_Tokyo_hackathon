@@ -72,47 +72,43 @@ function HomePage() {
   };
 
   return (
-    <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-700 to-slate-950 sm:py-12">
-      <div className="mx-auto max-w-7xl">
-        <div className="mx-auto max-w-7xl px-5 sm:px-6 md:px-8 lg:flex-col">
-          <div className="w-full pb-20 pt-52">
-            <div className="w mx-auto">
-              <p className="text-center text-6xl font-bold text-white">
-                ChatGPT for blockchain.
-              </p>
-            </div>
-          </div>
-          <form className="mx-auto w-full max-w-5xl" onSubmit={onSubmit}>
-            <div className="flex h-14 items-center rounded-lg border-2 border-solid border-white bg-gray-800 py-2">
-              <input
-                className="mr-3 w-full appearance-none bg-transparent py-1 pl-4 pr-2 text-xl leading-tight text-gray-300 focus:outline-none"
-                type="text"
-                placeholder="Enter your question"
-                aria-label="Search query"
-                value={userQuery}
-                onChange={(e) => setUserQuery(e.target.value)}
-              />
-              <button type="submit" className="p-4">
-                {isLoading ? (
-                  <FaSpinner className="h-8 w-8 animate-spin" />
-                ) : (
-                  <IoPaperPlaneOutline className="h-8 w-8 text-gray-500" />
-                )}
-              </button>
-            </div>
-          </form>
-          <div className="flex flex-col items-center pt-12">
-            {queryOutput === "" ? (
-              <DisplaySampleQueries
-                queries={sampleQueries}
-                setUserQuery={setUserQuery}
-              />
-            ) : (
-              queryOutput !== "" && parseAndRender(queryOutput)
-            )}
-          </div>
-        </div>
+    <main className="flex min-h-screen flex-col bg-gray-50 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-700 to-slate-950 sm:py-12">
+      <div className="mx-auto p-12 pt-48">
+        <p className="text-center text-6xl font-bold text-white">
+          ChatGPT for blockchain.
+        </p>
       </div>
-    </div>
+      <form className="mx-auto w-full max-w-5xl" onSubmit={onSubmit}>
+        <div className="flex h-14 items-center rounded-lg border-2 border-solid border-white bg-gray-800 py-2">
+          <input
+            className="mr-3 w-full appearance-none bg-transparent py-1 pl-4 pr-2 text-xl leading-tight text-gray-300 focus:outline-none"
+            type="text"
+            placeholder="Enter your question"
+            aria-label="Search query"
+            value={userQuery}
+            onChange={(e) => setUserQuery(e.target.value)}
+          />
+          <button type="submit" className="p-4">
+            {isLoading ? (
+              <FaSpinner className="h-8 w-8 animate-spin" />
+            ) : (
+              <IoPaperPlaneOutline className="h-8 w-8 text-gray-500" />
+            )}
+          </button>
+        </div>
+      </form>
+      <div className="flex flex-col items-center pt-12">
+        {queryOutput === "" ? (
+          <div className="mt-auto">
+            <DisplaySampleQueries
+              queries={sampleQueries}
+              setUserQuery={setUserQuery}
+            />
+          </div>
+        ) : (
+          queryOutput !== "" && parseAndRender(queryOutput)
+        )}
+      </div>
+    </main>
   );
 }

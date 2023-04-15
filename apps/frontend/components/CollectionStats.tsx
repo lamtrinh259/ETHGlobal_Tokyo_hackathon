@@ -1,12 +1,15 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { ICollectionStat } from "~/utils/interfaces";
 import { useTable } from "react-table";
+import CollectionStatsChart from "./CollectionStatsChart";
 
 export function CollectionStats({
   collectionStats,
 }: {
   collectionStats: ICollectionStat[];
 }) {
+  const [view, setView] = useState<"table" | "chart">("chart");
+
   const columns = useMemo(
     () => [
       // {
@@ -113,9 +116,28 @@ export function CollectionStats({
   );
 
   return (
-    <div>
-      <button className="right-0">Chart</button>
-      <Table columns={columns} data={data} />
+    <div className="flex flex-col items-start justify-start gap-4">
+      <div className="flex flex-row">
+        <button
+          className="rounded px-4 py-2 disabled:bg-slate-950"
+          disabled={view === "table"}
+          onClick={() => setView("table")}
+        >
+          Table
+        </button>
+        <button
+          className="rounded px-4 py-2 disabled:bg-slate-950"
+          disabled={view === "chart"}
+          onClick={() => setView("chart")}
+        >
+          Chart
+        </button>
+      </div>
+      {view === "table" ? (
+        <Table columns={columns} data={data} />
+      ) : (
+        <CollectionStatsChart collectionStats={data} />
+      )}
     </div>
   );
 }
@@ -135,10 +157,10 @@ function Table({ columns, data }: { columns: any; data: any }) {
       className="mx-2 my-2 table-auto px-2 py-2 text-white"
     >
       <thead>
-        {headerGroups.map((headerGroup: any) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column: any) => (
-              <th {...column.getHeaderProps()} className="text-md">
+        {headerGroups.map((headerGroup: any, i: number) => (
+          <tr {...headerGroup.getHeaderGroupProps()} key={i}>
+            {headerGroup.headers.map((column: any, i: number) => (
+              <th {...column.getHeaderProps()} className="text-md" key={i}>
                 {column.render("Header")}
               </th>
             ))}
@@ -149,10 +171,14 @@ function Table({ columns, data }: { columns: any; data: any }) {
         {rows.map((row: any, i: number) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map((cell: any) => {
+            <tr {...row.getRowProps()} key={i}>
+              {row.cells.map((cell: any, i: number) => {
                 return (
-                  <td {...cell.getCellProps()} className="text-center text-sm">
+                  <td
+                    {...cell.getCellProps()}
+                    className="text-center text-sm"
+                    key={i}
+                  >
                     {cell.render("Cell")}
                   </td>
                 );
