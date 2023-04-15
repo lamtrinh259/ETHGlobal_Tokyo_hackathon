@@ -29,6 +29,10 @@ export default function ExploreProfiles({ items }: { items: IItems[] }) {
           {
             Header: "Total Followers",
             accessor: (row: any, _: any) => row["stats"]["totalFollowers"],
+            Cell: (props: any) =>
+              props.value.toLocaleString("en-us", {
+                maximumFractionDigits: 2,
+              }),
           },
         ],
       },
