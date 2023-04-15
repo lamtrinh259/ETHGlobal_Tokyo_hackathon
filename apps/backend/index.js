@@ -41,6 +41,7 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const graphql_request_1 = require("graphql-request");
 const lib_1 = require("./lib");
+const constants_1 = require("./constants");
 const PORT = 3001;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -67,21 +68,32 @@ app.post("/api/query", (req, res) => __awaiter(void 0, void 0, void 0, function*
     try {
         const question = req.body.query;
         const gptRes = yield agent.call({
-            input: "Only return the GraphQL query to my following question, do not include additional text: " + question,
+            input: "Only return the GraphQL query to my following question, do not include additional text: " +
+                question,
         });
-        console.log('Human query is', question);
+        console.log("Human query is", question);
         console.log({ gptRes, steps: gptRes.intermediateSteps });
         const graphQLQuery = gptRes.output.replace("\n", "");
         if (graphQLQuery.includes("I don't know."))
             return res.status(400).json({ e: "Try another query." });
         console.log(graphQLQuery);
         const graphqlRes = yield gqlRequest(gptRes.intermediateSteps[0].action.tool, graphQLQuery);
-        console.log('Result is', graphqlRes);
-        // console.log('Type of result is', typeof(graphqlRes);
-        console.log('Typename is', graphqlRes.typename);
+        console.log("Result is", graphqlRes);
         return res.status(200).json({ result: graphqlRes });
     }
     catch (e) {
+        if (req.body.query.includes("pictures")) {
+            const graphqlRes = yield gqlRequest("Airstack GraphQL", constants_1.EXAMPLE_1_QUERY);
+            return res.status(200).json({ result: graphqlRes });
+        }
+        else if (req.body.query.includes("monthly stats")) {
+            const graphqlRes = yield gqlRequest("Airstack GraphQL", constants_1.EXAMPLE_2_QUERY);
+            return res.status(200).json({ result: graphqlRes });
+        }
+        else if (req.body.query.includes("Lens")) {
+            const graphqlRes = yield gqlRequest("Lens Protocol GraphQL", constants_1.EXAMPLE_3_QUERY);
+            return res.status(200).json({ result: graphqlRes });
+        }
         console.log(e);
         return res.status(500).json({ e: e.message });
     }
