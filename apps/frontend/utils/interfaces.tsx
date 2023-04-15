@@ -41,3 +41,16 @@ export interface ITokenBalance {
     };
   };
 }
+
+export interface IExploreProfiles {
+  items: IItems[];
+}
+
+export interface IItems {
+  id: string;
+  name: string;
+  handle: string;
+  stats: {
+    totalFollowers: number;
+  };
+}

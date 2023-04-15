@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "ingest": "ts-node ./ingest.ts",
-    "start": "ts-node ./index.ts",
-    "build": "tsc"
+    "start": "ts-node ./index.ts"
   },
   "dependencies": {
     "cors": "2.8.5",
