@@ -77,6 +77,8 @@ app.post("/api/query", (req, res) => __awaiter(void 0, void 0, void 0, function*
         console.log(graphQLQuery);
         const graphqlRes = yield gqlRequest(gptRes.intermediateSteps[0].action.tool, graphQLQuery);
         console.log('Result is', graphqlRes);
+        // console.log('Type of result is', typeof(graphqlRes);
+        console.log('Typename is', graphqlRes.typename);
         return res.status(200).json({ result: graphqlRes });
     }
     catch (e) {
