@@ -1,3 +1,219 @@
+export const query1response = {
+  data: {
+    TokenBalances: {
+      TokenBalance: [
+        {
+          tokenNfts: {
+            contentValue: {
+              image: {
+                original:
+                  "https://assets.airstack.xyz/image/nft/1/0x495f947276749ce646f68ac8c248420045cb7b5e/37215386690642204707856853210988651651483276880616924867876148468338789449753/original_image.png",
+              },
+            },
+          },
+          owner: {
+            primaryDomain: {
+              name: "paradigm.eth",
+            },
+          },
+        },
+        {
+          tokenNfts: {
+            contentValue: {
+              image: {
+                original:
+                  "https://assets.airstack.xyz/image/nft/1/0x8b08684e272b6deab898da430cfc5bb5c5e4bc3c/44/original_image.png",
+              },
+            },
+          },
+          owner: {
+            primaryDomain: {
+              name: "paradigm.eth",
+            },
+          },
+        },
+        {
+          tokenNfts: {
+            contentValue: {
+              image: {
+                original:
+                  "https://assets.airstack.xyz/image/nft/1/0xcaf952c02f56b0b4bd9d723ebbb0977a94802623/987/original_image.png",
+              },
+            },
+          },
+          owner: {
+            primaryDomain: {
+              name: "paradigm.eth",
+            },
+          },
+        },
+        {
+          tokenNfts: {
+            contentValue: {
+              image: {
+                original:
+                  "https://assets.airstack.xyz/image/nft/1/0x0651132f094551f9d4e40de3e1e2f8b7ac149c3a/5985/original_image.png",
+              },
+            },
+          },
+          owner: {
+            primaryDomain: {
+              name: "paradigm.eth",
+            },
+          },
+        },
+        {
+          tokenNfts: {
+            contentValue: {
+              image: {
+                original:
+                  "https://assets.airstack.xyz/image/nft/1/0x76be3b62873462d2142405439777e971754e8e77/10371/original_image.png",
+              },
+            },
+          },
+          owner: {
+            primaryDomain: {
+              name: "paradigm.eth",
+            },
+          },
+        },
+        {
+          tokenNfts: {
+            contentValue: {
+              image: {
+                original:
+                  "https://assets.airstack.xyz/image/nft/1/0xd07dc4262bcdbf85190c01c996b4c06a461d2430/544907/original_image.png",
+              },
+            },
+          },
+          owner: {
+            primaryDomain: {
+              name: "paradigm.eth",
+            },
+          },
+        },
+        {
+          tokenNfts: {
+            contentValue: {
+              image: {
+                original:
+                  "https://assets.airstack.xyz/image/nft/1/0x495f947276749ce646f68ac8c248420045cb7b5e/83744158593988153358001084230045394884524072091145925652061331959376173334529/original_image.png",
+              },
+            },
+          },
+          owner: {
+            primaryDomain: {
+              name: "paradigm.eth",
+            },
+          },
+        },
+        {
+          tokenNfts: {
+            contentValue: {
+              image: {
+                original:
+                  "https://assets.airstack.xyz/image/nft/1/0x495f947276749ce646f68ac8c248420045cb7b5e/83744158593988153358001084230045394884524072091145925652061331952779103567873/original_image.png",
+              },
+            },
+          },
+          owner: {
+            primaryDomain: {
+              name: "paradigm.eth",
+            },
+          },
+        },
+        {
+          tokenNfts: {
+            contentValue: {
+              image: {
+                original:
+                  "https://assets.airstack.xyz/image/nft/1/0x635e26fd087fcad102bf77ff3bed505057b3b70a/2/original_image.+xml",
+              },
+            },
+          },
+          owner: {
+            primaryDomain: {
+              name: "paradigm.eth",
+            },
+          },
+        },
+        {
+          tokenNfts: {
+            contentValue: {
+              image: {
+                original:
+                  "https://assets.airstack.xyz/image/nft/1/0x635e26fd087fcad102bf77ff3bed505057b3b70a/1/original_image.+xml",
+              },
+            },
+          },
+          owner: {
+            primaryDomain: {
+              name: "paradigm.eth",
+            },
+          },
+        },
+        {
+          tokenNfts: {
+            contentValue: {
+              image: {
+                original:
+                  "https://assets.airstack.xyz/image/nft/1/0x495f947276749ce646f68ac8c248420045cb7b5e/1753784548843535283810057946945254782872932575469588696384041490204736880641/original_image.gif",
+              },
+            },
+          },
+          owner: {
+            primaryDomain: {
+              name: "paradigm.eth",
+            },
+          },
+        },
+        {
+          tokenNfts: {
+            contentValue: {
+              image: {
+                original:
+                  "https://assets.airstack.xyz/image/nft/1/0xd6ca94fe35b517dd73c62d2106a2a0d5cd01275f/1/original_image.+xml",
+              },
+            },
+          },
+          owner: {
+            primaryDomain: {
+              name: "paradigm.eth",
+            },
+          },
+        },
+        {
+          tokenNfts: {
+            contentValue: {
+              image: {
+                original:
+                  "https://assets.airstack.xyz/image/nft/1/0x495f947276749ce646f68ac8c248420045cb7b5e/52864922807108286040915842844889914153888941683259648608243680323568622632961/original_image.png",
+              },
+            },
+          },
+          owner: {
+            primaryDomain: {
+              name: "paradigm.eth",
+            },
+          },
+        },
+        {
+          tokenNfts: {
+            contentValue: {
+              image: null,
+            },
+          },
+          owner: {
+            primaryDomain: {
+              name: "paradigm.eth",
+            },
+          },
+        },
+      ],
+    },
+  },
+};
+
 export const query2response = {
   data: {
     CollectionStats: {

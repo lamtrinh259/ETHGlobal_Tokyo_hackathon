@@ -5,7 +5,7 @@ import { IoPaperPlaneOutline } from "react-icons/io5";
 import { FaSpinner } from "react-icons/fa";
 import axios from "axios";
 import parseAndRender from "~/utils/parser";
-import { query2response } from "~/utils/sampleJSONOutputs";
+import { query1response, query2response } from "~/utils/sampleJSONOutputs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -52,7 +52,7 @@ function DisplaySampleQueries({
 
 function HomePage() {
   const [userQuery, setUserQuery] = useState<string>("");
-  const [queryOutput, setQueryOutput] = useState<string>(query2response);
+  const [queryOutput, setQueryOutput] = useState(query1response);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
