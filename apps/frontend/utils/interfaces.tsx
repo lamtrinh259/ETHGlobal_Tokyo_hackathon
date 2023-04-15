@@ -22,3 +22,22 @@ export interface ICollectionStats {
 export interface IData {
   [key: string]: any[];
 }
+
+export interface ITokenBalances {
+  TokenBalance: ITokenBalance[];
+}
+
+export interface ITokenBalance {
+  tokenNfts: {
+    contentValue: {
+      image: {
+        original: string;
+      };
+    };
+  };
+  owner: {
+    primaryDomain: {
+      name: string;
+    };
+  };
+}

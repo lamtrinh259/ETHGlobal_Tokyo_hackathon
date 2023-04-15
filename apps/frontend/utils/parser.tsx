@@ -1,5 +1,10 @@
 import { CollectionStats } from "~/components/CollectionStats";
-import { ICollectionStat, ICollectionStats } from "./interfaces";
+import TokenBalances from "~/components/TokenBalances";
+import {
+  ICollectionStat,
+  ICollectionStats,
+  ITokenBalances,
+} from "./interfaces";
 
 export default function parseAndRender(resp: any): any {
   console.log("response in render", resp);
@@ -10,6 +15,8 @@ export default function parseAndRender(resp: any): any {
     parseAndRender(resp["data"])
   ) : type === "CollectionStats" ? (
     renderCollectionStats(resp["CollectionStats"])
+  ) : type === "TokenBalances" ? (
+    renderTokenBalances(resp["TokenBalances"])
   ) : (
     <>{JSON.stringify(resp)}</>
   );
@@ -25,4 +32,10 @@ function renderCollectionStats(collectionStats: ICollectionStats) {
       })} */}
     </div>
   );
+}
+
+function renderTokenBalances(tokenBalances: ITokenBalances) {
+  console.log("At renderTokenBalances");
+
+  return <TokenBalances tokenBalances={tokenBalances["TokenBalance"]} />;
 }
