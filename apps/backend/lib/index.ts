@@ -23,7 +23,7 @@ export async function getChain() {
 export async function getAirstackTool() {
   const model = new OpenAI({
     openAIApiKey: process.env.OPENAI_API_KEY!,
-    temperature: 0.25,
+    temperature: 0.1,
   });
   const vectorStore = await HNSWLib.load(
     path.join(__dirname, `../vector-store/airstack`),
