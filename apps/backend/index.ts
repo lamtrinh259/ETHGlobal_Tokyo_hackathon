@@ -41,7 +41,10 @@ app.post("/api/query", async (req: express.Request, res: express.Response) => {
   try {
     const question = req.body.query;
     const gptRes = await agent.call({
-      input: "Only return the GraphQL query to my following question, do not include additional text: " + question,
+      input: `Only return the GraphQL code as answer, do NOT include any extra text, and strictly stick to the examples given to you.
+      For queries that are closely similar (by any similarity distance measure) or same to the examples, you can simply copy the GraphQL
+      code from the examples and return that as the output. Do NOT make up your own GraphQL code.
+      ` + question,
     });
     console.log('Human query is', question)
     console.log({ gptRes, steps: gptRes.intermediateSteps });
