@@ -22,6 +22,8 @@ export async function getChain() {
 
 export async function getAirstackTool() {
   const model = new OpenAI({
+    // Default model is gpt-turbo-3.5
+    // model_name: "text-davinci-003",
     openAIApiKey: process.env.OPENAI_API_KEY!,
     temperature: 0,
   });

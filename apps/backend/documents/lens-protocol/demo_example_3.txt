@@ -1,4 +1,4 @@
-Find the top 10 Lens Profiles and return their id, name, handle, and the number of totalFollowers, sorted by the number of most followers.
+Find the top 10 Lens Profiles and return their id, name, handle, and the number of followers, sorted by the number of most followers.
 
 query ExploreProfilesTop10 {
   exploreProfiles(request: { sortCriteria: MOST_FOLLOWERS, limit: 10 }) {
