@@ -1,0 +1,24 @@
+Get the monthly stats for The Currency NFT collection. The collection address is 0xaaDc2D4261199ce24A4B0a57370c4FCf43BB60aa.
+
+{
+  CollectionStats(
+    input: {filter: {tokenAddress: {_eq: "0xaaDc2D4261199ce24A4B0a57370c4FCf43BB60aa"}, firstTransactionBlockTimestamp: {_lte: "2023-04-15T00:00:00.000Z"}, lastTransactionBlockTimestamp: {_lte: "2023-04-15T00:00:00.000Z"}}, blockchain: ethereum, timeFrame: MONTHLY, limit: 50}
+  ) {
+    CollectionStat {
+      id
+      tokenAddress
+      firstTransactionBlockTimestamp
+      lastTransactionBlockTimestamp
+      totalSalesCount
+      averageSalePriceInUSDC
+      lowestSalePriceInUSDC
+      highestSalePriceInUSDC
+      totalSaleVolumeInUSDC
+      dappVersion
+      blockchain
+      lowestSalePriceInNativeToken
+      totalSaleVolumeInNativeToken
+      averageSalePriceInNativeToken
+    }
+  }
+}
