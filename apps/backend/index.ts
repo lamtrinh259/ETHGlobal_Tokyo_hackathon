@@ -5,6 +5,7 @@ import express from "express";
 import cors from "cors";
 import { request } from "graphql-request";
 import { getAgent } from "./lib";
+import { AgentExecutor } from "langchain/agents";
 
 const PORT = 3001;
 
@@ -16,6 +17,8 @@ const GRAPHQL_URL: { [key: string]: string } = {
   "Lens Protocol GraphQL": "https://api.lens.dev",
   "Airstack GraphQL": "https://api.airstack.xyz/gql",
 };
+
+let agent: AgentExecutor;
 
 async function gqlRequest(tool: string, graphQLQuery: string): Promise<any> {
   console.log(tool);
@@ -36,7 +39,6 @@ async function gqlRequest(tool: string, graphQLQuery: string): Promise<any> {
 
 app.post("/api/query", async (req: express.Request, res: express.Response) => {
   try {
-    const agent = await getAgent();
     const question = req.body.query;
     const gptRes = await agent.call({
       input: question + " Only return the GraphQL query.",
@@ -57,6 +59,7 @@ app.post("/api/query", async (req: express.Request, res: express.Response) => {
   }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+  agent = await getAgent();
   console.log(`[server]: Server is running at http://localhost:${PORT}`);
 });
