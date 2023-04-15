@@ -1,0 +1,22 @@
+Show me the NFT pictures on Ethereum held by paradigm.eth
+
+query NFTPicturesHeldByParadigmEth {
+  TokenBalances(
+    input: {filter: {owner: {_eq: "paradigm.eth"}, tokenType: {_in: [ERC1155, ERC721]}}, blockchain: ethereum, limit: 50}
+  ) {
+    TokenBalance {
+      tokenNfts {
+        contentValue {
+          image {
+            original
+          }
+        }
+      }
+      owner {
+        primaryDomain {
+          name
+        }
+      }
+    }
+  }
+}
