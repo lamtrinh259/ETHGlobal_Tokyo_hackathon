@@ -1,4 +1,4 @@
-Get 10 lens ids and handle ids and followers with the most followers
+Get the top 10 lens ids and handle ids and followers sorted by the number of most followers
 
 query ExploreProfilesTop10 {
   exploreProfiles(request: { sortCriteria: MOST_FOLLOWERS, limit: 10 }) {
@@ -9,6 +9,6 @@ query ExploreProfilesTop10 {
       stats{
         totalFollowers
       }
-    }   
+    }
   }
 }
