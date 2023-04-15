@@ -4,6 +4,8 @@ import { FormEvent, useState } from "react";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 import { FaSpinner } from "react-icons/fa";
 import axios from "axios";
+import parseAndRender from "~/utils/parser";
+import { query2response } from "~/utils/sampleJSONOutputs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -50,7 +52,7 @@ function DisplaySampleQueries({
 
 function HomePage() {
   const [userQuery, setUserQuery] = useState<string>("");
-  const [queryOutput, setQueryOutput] = useState<string>("");
+  const [queryOutput, setQueryOutput] = useState<string>(query2response);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -106,9 +108,7 @@ function HomePage() {
                 setUserQuery={setUserQuery}
               />
             ) : (
-              <div className="h-64 w-full overflow-scroll rounded bg-sky-900 p-8">
-                {JSON.stringify(queryOutput)}
-              </div>
+              queryOutput !== "" && parseAndRender(queryOutput)
             )}
           </div>
         </div>
