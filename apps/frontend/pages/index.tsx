@@ -232,7 +232,7 @@ function HomePage() {
   return (
     <div className="flex min-h-screen flex-col bg-gray-50 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-700 to-slate-950 sm:py-12">
       <header className="flex justify-between pr-14">
-        <img src="./project_icon.png" className="ml-14 h-16 w-16 rounded-lg" />
+        <img src="./Logo.svg" className="ml-14 h-16 w-16 rounded-lg" />
         <ConnectButton />
       </header>
       <main>
