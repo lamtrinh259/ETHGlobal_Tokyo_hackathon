@@ -30,12 +30,12 @@ We also think that this simple yet user-friendly web app would help to onboard t
 ___
 ### How to run the project locally
 1. Get the API keys required to run the project locally: OpenAI API key, and Airstack API key. You can get them by signing up for free at https://openai.com/, and https://airstack.xyz/
-2. Install all requirements first by running
+2. Install all requirements first by running<br>
 `yarn install` from the project root folder
-3. For back end:
-a. Go inside the apps/backend folder
-b. Ingest the pre-trained data (text documents) by running: `yarn ingest`
-c. Then run `yarn start` to start the server at http://localhost:3001
-4. For front end:
-a. On another terminal, go inside the apps/frontend folder
-b. Run `yarn start` to start the server at http://localhost:3000
+3. For back end:<br>
+a. Go inside the apps/backend folder<br>
+b. Ingest the pre-trained data (text documents) by running: `yarn ingest`<br>
+c. Then run `yarn start` to start the server at http://localhost:3001<br>
+4. For front end:<br>
+a. On another terminal, go inside the apps/frontend folder<br>
+b. Run `yarn start` to start the server at http://localhost:3000<br>
